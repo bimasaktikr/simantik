@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class MitraImport implements ToModel
+class MitraImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row

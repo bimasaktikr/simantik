@@ -141,10 +141,10 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="/importmitra" method="POST" id="formImportMitra">
+            <form action="/importmitra" method="post" id="formImportMitra" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
-                <input type="file" name="fileMitra" id="fileMitra">    
+                <input type="file" name="importFile" id="importFile">    
               </div>
               <div class="form-group">
                 <button type="submit"class="btn btn-primary">Tambahkan</button>

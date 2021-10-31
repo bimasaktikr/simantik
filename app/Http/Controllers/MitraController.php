@@ -187,8 +187,8 @@ class MitraController extends Controller
     // IMPORT MITRA
     public function importMitra (Request $request){
         
-        Excel::import(new MitraImport, request()->file('templates.xlsx'));
+        Excel::import(new MitraImport(), $request->file('importFile'));
 
-        return redirect()->back();
+        return 'SUCCESS';
     }
 }
