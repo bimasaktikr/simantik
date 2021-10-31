@@ -1,0 +1,125 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Activity;
+use App\Models\Job;
+// use App\Http\Controllers\Datatables;
+use Illuminate\Http\Request;
+use App\DataTables\ActivityDataTable;
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
+
+
+class ActivityController extends Controller
+{
+    /*
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function index(Request $request)
+    {
+        $activity = Activity::all();
+        if($request->ajax()){
+            $activity = Activity::with('mitra', 'job', 'division');
+            // $activity2 = Activity::with('division');
+            
+
+            return Datatables::of($activity)
+            ->addColumn('mitra', function (Activity $activity) {
+                return $activity->mitra->name;
+            })
+            ->addColumn('job', function (Activity $activity) {
+                return $activity->job->name;
+                // return $activity->job->division->name;
+            })
+            ->addColumn('division', function (Activity $activity) {
+                return $activity->division->name;
+                // return $activity->job->division->name;
+            })
+            ->toJson();
+        }   
+        return view ('activity.index');
+    }
+
+    public function getActivityData()
+    {
+        $activity = Activity::select([
+            DB::raw("CONCAT(users.id,'-',users.id) as id"),
+            'users.name',
+            'users.email',
+            DB::raw('count(posts.user_id) AS count'),
+            'users.created_at',
+            'users.updated_at'
+        ])->leftJoin('posts', 'posts.user_id', '=', 'users.id')
+        ->groupBy('users.id');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Activity  $activity
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Activity $activity)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Activity  $activity
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Activity $activity)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Activity  $activity
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Activity $activity)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Activity  $activity
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Activity $activity)
+    {
+        //
+    }
+}
