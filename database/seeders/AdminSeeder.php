@@ -20,6 +20,7 @@ class AdminSeeder extends Seeder
             'email' => 'admin@bps.go.id',
             'email_verified_at' => now(),
             'password' => bcrypt('simantik'),
+            'is_admin' => '1'
         ]);
 
         Office::Create([

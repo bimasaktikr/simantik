@@ -20,9 +20,13 @@ class MitraImport implements ToModel, WithHeadingRow
             'name' => $row['nama'],
             'slug' => Str::of($row['nama']),
             'email' => $row['email'],
+            'nik' => $row['nik'],
             'gender' => $row['gender'],
             'alamat' => $row['alamat'],
             'pendidikan' => $row['pendidikan'],
+            'kecamatan' => $row['kecamatan'],
+            'kelurahan' => $row['kelurahan'],
+            'nohp' => $row['nohp'],
         ]);
     }
 }

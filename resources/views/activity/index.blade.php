@@ -124,7 +124,7 @@
         </button>
       </div>
       <div class="modal-body">
-          <form id="formAddActivity">
+          <form id="formAddActivity" autocomplete="off">
               <div class="form-group">
                 <label for="name">Nama</label>
                 <input type="text" class="form-control typeahead" id="name" name="name">
