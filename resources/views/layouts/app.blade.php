@@ -241,7 +241,7 @@
                   <li class="nav-item">
                     <a href="/job" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
-                      <p>Kegiatan</p>
+                      <p>Pekerjaan</p>
                     </a>
                   </li>
                   

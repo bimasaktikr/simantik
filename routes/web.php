@@ -60,8 +60,8 @@ Route::group(['middleware'=>'auth'], function(){
     // JOB
     // Route::get('/job', [JobController::class, 'index']);
     Route::resource('job', JobController::class);
-    // Route::get('/joblist', [ActivityController::class, 'getActivityData']); 
-    
+    Route::get('/jobseeder', [JobController::class, 'jobseeder']);
+
     // MITRA ROUTE
     Route::resource('mitra', MitraController::class);
     Route::post('/addmitra', [MitraController::class, 'addMitra']); 
@@ -74,6 +74,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/activitysearchjob', [ActivityController::class, 'searchJob'])->name('searchjob'); 
     Route::post('/addActivity', [ActivityController::class, 'addActivity'])->name('addActivity'); 
     Route::post('/activityexport', [ActivityController::class, 'export']);
+    Route::get('/batchactivity', [ActivityController::class, 'batchactivity'])->name('batchactivity'); 
 
 
 });

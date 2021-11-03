@@ -54,35 +54,6 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('simantik'),
         ]);
-        Division::create([
-            'id' => 1 ,
-            'name' => 'Tata Usaha',
-            'code' => '35731',
-        ]);
-        Division::create([
-            'id' => 2 ,
-            'name' => 'Fungsi Sosial',
-            'code' => '35732',
-        ]);
-        Division::create([
-            'id' => 3 ,
-            'name' => 'Fungsi Produksi',
-            'code' => '35733',
-        ]);
-        Division::create([
-            'id' => 4 ,
-            'name' => 'Fungsi Nerwilis',
-            'code' => '35734',
-        ]);
-        Division::create([
-            'id' => 5 ,
-            'name' => 'Fungsi Distribusi',
-            'code' => '35735',
-        ]);
-        Division::create([
-            'id' => 6 ,
-            'name' => 'Fungsi IPDS',
-            'code' => '35736',
-        ]);
+        
     }
 }

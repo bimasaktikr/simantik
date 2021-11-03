@@ -30,67 +30,38 @@
         </div>
         
         <div class="card-body">
-            <div class="row">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddActivity">
-                Tambah Kegiatan
-              </button>
-              <a href="/batchactivity" type="button" class="btn btn-primary" id="penilaian">
-                Penilaian Kegiatan
-              </a>
-              {{-- <button type="button" class="btn btn-primary" id="export">
-                Export Excel
-              </button> --}}
-            </div>
-            <div class="dropdown-divider"></div>
-            <div class="row">
-              <div class="col">
-                <label for="waktuFilter">Waktu</label>
-                <select id="waktuFilter" class="form-control">
-                  <option selected value="0">Choose...</option>
-                  <option value="7">>= 7</option>
-                  <option value="8">>= 8</option>
-                  <option value="9">>= 9</option>
-                </select>
-              </div>
-              <div class="col">
-                <label for="kualitasFilter">Kualitas</label>
-                <select id="kualitasFilter" class="form-control">
-                  <option selected value="0">Choose...</option>
-                  <option value="7">>= 7</option>
-                  <option value="8">>= 8</option>
-                  <option value="9">>= 9</option>
-                </select>
-              </div>
-              <div class="col">
-                <label for="sikapFilter">Sikap</label>
-                <select id="sikapFilter" class="form-control">
-                  <option selected value="0">Choose...</option>
-                  <option value="7">>= 7</option>
-                  <option value="8">>= 8</option>
-                  <option value="9">>= 9</option>
-                </select>
-              </div>
-              <div class="col">
-                <label for="ipkFilter">IPK</label>
-                <select id="ipkFilter" class="form-control">
-                  <option selected value="0">Choose...</option>
-                  <option value="7">>= 7</option>
-                  <option value="8">>= 8</option>
-                  <option value="9">>= 9</option>
-                </select>
-              </div>
-            </div>
-            <div class="dropdown-divider"></div>
+            <div class="" >
+                {{-- <form class="" id="jobBatch" autocomplete="off">
+                    <div class="form-group col">
+                        <label for="job">Kegiatan</label>
+                        <input name="job"type="job" class="form-control typeahead" id="job" aria-describedby="job">
+                      </div>
+                </form> --}}
 
-            {{-- {!! $dataTable->table() !!} --}}
-            
+                <div class="col-12">
+                    <label class="visually-hidden" for="pekerjaanSelect">Pekerjaan</label>
+                    <select class="form-select" id="pekerjaanSelect">
+                        <option>Choose...</option>
+                      @foreach ( $jobs as $job )
+                          <option value={{ $job -> name }}>{{ $job -> name }}</option>
+                      @endforeach
+                       
+                    </select>
+                  </div>
+                <form class ="row" id="addBatchItem" autocomplete="off">
+                        <div class="col-md-8">
+                            <input type="text" placeholder="Ketik Nama Mitra..." class="form-control typeahead" id="name" name="name">
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary" id="addMitraID">Tambah</button>
+                        </div>
+                </form>
+            </div>
+
             <table class="table table-bordered" id="my-table">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Nama</th>
-                        <th>Kegiatan</th>
-                        <th>Seksi</th>
                         <th>Waktu</th>
                         <th>Kualitas</th>
                         <th>Sikap</th>
@@ -201,8 +172,7 @@
             });
         });
 
-        
-        
+                
         //TOMBOL TAMBAH DATA
         //jika tombol-tambah diklik maka
               
@@ -221,14 +191,11 @@
                   }
                 },
                 columns: [
-                  { data: 'id', name: 'id'},
                   { data : 'mitra',
                     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                         $(nTd).html("<a href='{{ url('') }}/mitra/"+oData.slug+"'>"+oData.mitra+"</a>");
                     }
                   },
-                  { data: 'job', name: 'job.name'},
-                  { data: 'division', name: 'division.name'},
                   { data: 'waktu', name: 'waktu'},
                   { data: 'kualitas', name: 'kualitas'},
                   { data: 'sikap', name: 'sikap'},
@@ -241,53 +208,14 @@
             var sikap = $("#sikapFilter").val();
             var ipk= $("#ipkFilter").val();
 
-        // // Event listener to the two range filtering inputs to redraw on input
-        $('#waktuFilter, #sikapFilter, #kualitasFilter, #ipkFilter').change( function() {
-            table.draw();
-        });
-
-        // EXPORT AJAX
-        $("#export").on('click', function(){
-          var waktu = $("#waktuFilter").val();
-          var kualitas = $("#kualitasFilter").val();
-          var sikap = $("#sikapFilter").val();
-          var ipk= $("#ipkFilter").val();
-          $.ajax({
-            xhrFields: {
-                responseType: '',
-            },
-            url : '{{url('')}}/activityexport',
-            method : "POST",
-            data : {
-              waktu : waktu,
-              kualitas : kualitas,
-              sikap : sikap,
-              ipk : ipk,
-             
-            }, 
-            success: function(result, status, xhr) {
-
-                var disposition = xhr.getResponseHeader('content-disposition');
-                var matches = /"([^"]*)"/.exec(disposition);
-                var filename = (matches != null && matches[1] ? matches[1] : 'salary.xls');
-
-                // The actual download
-                var blob = new Blob([result], {
-                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                });
-
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = filename;
-
-                document.body.appendChild(link);
-
-                link.click();
-                document.body.removeChild(link);
-                }
-          });
-        })
-        
+       
+        $('#pekerjaanSelect').change(
+            function(){
+                var job = $("#pekerjaanSelect").val();
+                alert(job);
+            }
+            
+        );
         // AUTOCOMPLETE
         var pathName = "{{ url('')}}/activitysearchname";
         var pathJob = "{{ url('')}}/activitysearchjob";
@@ -308,9 +236,9 @@
         });
 
         // AJAX ADD KEGIATAN
-        $("#formAddActivity").on('submit', function(e){
-            event.preventDefault();
-            submitForm();
+        $("#addMitraID").on('submit', function(){
+            
+            
         })
        
         function submitForm(){

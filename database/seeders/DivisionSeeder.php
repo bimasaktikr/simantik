@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Division;
+use App\Models\Office;
 
 class DivisionSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class DivisionSeeder extends Seeder
      */
     public function run()
     {
+        $code = Office::all()->first()->code;
+
         Division::create([
             'id' => 1 ,
             'name' => 'Tata Usaha',

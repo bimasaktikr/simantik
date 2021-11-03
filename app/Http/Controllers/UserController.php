@@ -24,6 +24,10 @@ class UserController extends Controller
     // {
        
     // }
+    // public function __construct(UserController $UserController)
+    // {
+    //     $this->UserController = $UserController;
+    // }
 
     public function index(UserDataTable $dataTable)
     {   
@@ -108,8 +112,13 @@ class UserController extends Controller
 
     public function userseeder()
     {
+        $users = User::all();
+        $prevusers = User::where('is_admin', '0')->delete();
+        // return $prevusers->toJson();
+
         return Artisan::call("db:seed", [
             'class' => 'UserSeeder'
+            
         ]);
     }
 }

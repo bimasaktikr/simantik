@@ -21,6 +21,8 @@ class ActivityController extends Controller
 {
 
     protected $MitraController;
+    
+
     public function __construct(MitraController $MitraController)
     {
         $this->MitraController = $MitraController;
@@ -222,14 +224,13 @@ class ActivityController extends Controller
     {
         $nameData = $request->all();
         $query = $nameData['query'];
+                        
+        $user = Auth::user();
+        $div = Str::of($user->email)->after('3573');
+        $div2 = Str::of($div)->before('@bps.go.id');
 
         $filterdata = Job::select('name')
-                        ->whereHas('job', function( Builder $query){
-                            $user = Auth::user();
-                            $div = Str::of($user->email)->after('3573');
-                            $div2 = Str::of($div)->before('@bps.go.id');
-                            $query -> where('job_id', "=", $div2);
-                        })
+                        ->where('division_id', "=", $div2)
                         ->where('name', 'LIKE', '%'.$query.'%')
                         ->get();
 
@@ -332,5 +333,19 @@ class ActivityController extends Controller
     public function destroy(Activity $activity)
     {
         //
+    }
+
+    public function batchactivity()
+    {   
+        $user = Auth::user();
+        $div = Str::of($user->email)->after('3573');
+        $div2 = Str::of($div)->before('@bps.go.id');
+
+        $filterdata = Job::select('name')
+                        ->where('division_id', "=", $div2)
+                        ->get();
+        return view ('activity.add', [
+            'jobs' => $filterdata
+        ]);
     }
 }

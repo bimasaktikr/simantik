@@ -29,7 +29,12 @@
         
         <div class="card-body">
             <div class="row">
-                
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddJob">
+                Tambah Pekerjaan
+              </button>
+              <button type="button" class="btn btn-primary" id="jobSeeder">
+                Tambah Pekerjaan
+              </button>
                 
             </div>
     
@@ -48,7 +53,7 @@
             </table>
         </div>
     </div>
-    <div class="modal fade" id="modal-default">
+    <div class="modal fade " id="modalAddJob" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalAddActivity" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -58,25 +63,18 @@
               </button>
             </div>
             <div class="modal-body">
-                <form id="form">
+                <form id="formAddJob" autocomplete="off">
                     <div class="form-group">
-                      <label for="name">Satuan kerja</label>
-                      <input name = "name" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                      <label for="name">Nama Pekerjaan</label>
+                      <input name = "name" type="text" class="form-control" id="name">
                     </div>
                     <div class="form-group">
-                      <label for="code">Kode Satker</label>
-                      <input name = "code" type="text" class="form-control" id="code" aria-describedby="emailHelp">
-                    </div>
-                    <div class="form-group">
-                      <label for="address">Alamat</label>
-                      <input name = "address" type="text" class="form-control" id="address">
+                      <label for="code">Kode Pekerjaan</label>
+                      <input name = "code" type="text" class="form-control" id="code">
                     </div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
                 </form>
-            </div>
-            <div class="modal-footer justify-content-between">
-              
             </div>
           </div>
       
@@ -140,6 +138,19 @@
           submitForm()
       })
 
+      $("#jobSeeder").click(function (){
+          $.ajax({    
+            url : "{{ url('') }}/jobseeder",
+            method : "GET",
+            sucess : function (){
+              alert ("Pekerjaan Berhasil Ditambakan")
+            },
+            error : function (err){
+              console.log(err)
+              alert ("Terjadi Kesalahan")
+            }
+          })
+        })
       function submitForm(){
             let form = $("#form");
             const url = "{{ url('') }}/editoffice";

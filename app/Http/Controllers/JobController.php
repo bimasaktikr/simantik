@@ -9,6 +9,7 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
 
 
 class JobController extends Controller
@@ -101,4 +102,12 @@ class JobController extends Controller
     {
         //
     }
+    
+    public function jobseeder()
+    {
+        return Artisan::call("db:seed", [
+            'class' => 'JobSeeder'
+        ]);
+    }
+
 }
